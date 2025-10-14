@@ -2,6 +2,6 @@
 
 namespace TPFinal.Business.Services;
 
-public interface ConsultantService : IConsultantService
+public class ConsultantService : IConsultantService
 {
 }
