@@ -56,6 +56,7 @@ public class CompetenceService : ICompetenceService
     {
         return _context.Competences.Select(c => new CompetenceDTO
         {
+            Id = c.Id,
             CompetenceTechnique = c.CompetenceTechnique,
             Categorie = c.Categorie
         }).ToList();

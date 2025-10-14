@@ -16,6 +16,7 @@ builder.Services.AddDbContext<TPFinalDbContext>(
 
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ICompetenceService, CompetenceService>();
+builder.Services.AddScoped<IConsultantCompetenceService, ConsultantCompetenceService>();
 builder.Services.AddScoped<IConsultantService, ConsultantService>();
 builder.Services.AddScoped<IMissionService, MissionService>();
 
