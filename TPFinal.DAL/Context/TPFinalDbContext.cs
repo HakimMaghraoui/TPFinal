@@ -33,8 +33,8 @@ public sealed class TPFinalDbContext : DbContext
         modelBuilder.Entity<Mission>()
             .HasOne<Consultant>()
             .WithMany(c => c.Missions)
-            .HasForeignKey(m => m.ConsultantId);
-            //.OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(m => m.ConsultantId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<Mission>()
             .HasOne<Client>()

@@ -12,7 +12,7 @@ using TPFinal.DAL.Context;
 namespace TPFinal.DAL.Migrations
 {
     [DbContext(typeof(TPFinalDbContext))]
-    [Migration("20251014105241_InitialCreate")]
+    [Migration("20251014115600_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -138,7 +138,13 @@ namespace TPFinal.DAL.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ConsultantId")
+                    b.Property<Guid?>("ClientId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ConsultantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ConsultantId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateDebut")
@@ -160,7 +166,11 @@ namespace TPFinal.DAL.Migrations
 
                     b.HasIndex("ClientId");
 
+                    b.HasIndex("ClientId1");
+
                     b.HasIndex("ConsultantId");
+
+                    b.HasIndex("ConsultantId1");
 
                     b.ToTable("Missions");
                 });
@@ -192,11 +202,22 @@ namespace TPFinal.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TPFinal.DAL.Entities.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId1");
+
                     b.HasOne("TPFinal.DAL.Entities.Consultant", null)
                         .WithMany("Missions")
                         .HasForeignKey("ConsultantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("TPFinal.DAL.Entities.Consultant", "Consultant")
+                        .WithMany()
+                        .HasForeignKey("ConsultantId1");
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Consultant");
                 });
 
             modelBuilder.Entity("TPFinal.DAL.Entities.Client", b =>

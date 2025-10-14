@@ -22,7 +22,9 @@ public class Mission
     [Range(0.1, double.MaxValue, ErrorMessage = "Le budget doit être un nombre positif.")]
     public decimal Budget { get; set; }
     [ForeignKey("Consultant")]
-    public Guid ConsultantId { get; set; }
+    public Guid? ConsultantId { get; set; }
+    public Consultant? Consultant { get; set; }
     [ForeignKey("Client")]
     public Guid ClientId { get; set; }
+    public Client? Client { get; set; }
 }

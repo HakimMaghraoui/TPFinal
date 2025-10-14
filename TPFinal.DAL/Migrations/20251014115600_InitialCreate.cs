@@ -90,8 +90,10 @@ namespace TPFinal.DAL.Migrations
                     DateDebut = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateFin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ConsultantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ConsultantId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ConsultantId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClientId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,11 +105,21 @@ namespace TPFinal.DAL.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Missions_Clients_ClientId1",
+                        column: x => x.ClientId1,
+                        principalTable: "Clients",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Missions_Consultants_ConsultantId",
                         column: x => x.ConsultantId,
                         principalTable: "Consultants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Missions_Consultants_ConsultantId1",
+                        column: x => x.ConsultantId1,
+                        principalTable: "Consultants",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -126,9 +138,19 @@ namespace TPFinal.DAL.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Missions_ClientId1",
+                table: "Missions",
+                column: "ClientId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Missions_ConsultantId",
                 table: "Missions",
                 column: "ConsultantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Missions_ConsultantId1",
+                table: "Missions",
+                column: "ConsultantId1");
         }
 
         /// <inheritdoc />
