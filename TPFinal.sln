@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Back", "Back", "{34436767-8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPFinal.API", "TPFinal.API\TPFinal.API.csproj", "{EA324C03-32BB-4268-88DB-E1D9E218F31D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TPFinal.Business", "TPFinal.Business\TPFinal.Business.csproj", "{7F2D5DEE-7A9F-4963-9EFC-6A63FBC2D75E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{EA324C03-32BB-4268-88DB-E1D9E218F31D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA324C03-32BB-4268-88DB-E1D9E218F31D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA324C03-32BB-4268-88DB-E1D9E218F31D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F2D5DEE-7A9F-4963-9EFC-6A63FBC2D75E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F2D5DEE-7A9F-4963-9EFC-6A63FBC2D75E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F2D5DEE-7A9F-4963-9EFC-6A63FBC2D75E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F2D5DEE-7A9F-4963-9EFC-6A63FBC2D75E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{05D28468-11A3-41E9-856A-0977FA5FFAB7} = {34436767-82C4-480B-8C90-5EC6C3327E5A}
 		{EA324C03-32BB-4268-88DB-E1D9E218F31D} = {34436767-82C4-480B-8C90-5EC6C3327E5A}
+		{7F2D5DEE-7A9F-4963-9EFC-6A63FBC2D75E} = {34436767-82C4-480B-8C90-5EC6C3327E5A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CE73E4C8-2E2F-4D02-BC9D-81569F64F9D7}

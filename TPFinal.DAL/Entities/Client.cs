@@ -21,5 +21,5 @@ public class Client
     [EmailAddress(ErrorMessage = "E-mail est pas valide")]
     [Display(Name = "E-mail")]
     public string Email { get; set; } = string.Empty;
-    public ICollection<Mission> Missions { get; set; }
+    public ICollection<Mission>? Missions { get; set; }
 }
