@@ -1,4 +1,5 @@
-﻿using TPFinal.Business.Abstractions;
+﻿using Microsoft.EntityFrameworkCore;
+using TPFinal.Business.Abstractions;
 using TPFinal.Business.Models;
 using TPFinal.DAL.Context;
 using TPFinal.DAL.Entities;
@@ -13,9 +14,9 @@ public class ClientService : IClientService
         _context = context;
     }
 
-    public Task<bool> ClientExistAsync(Guid id)
+    public async Task<bool> ClientExistAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Clients.AnyAsync(c => c.Id == id);
     }
 
     public async Task<Guid> CreateClientAsync(ClientDTO clientDto)
@@ -40,9 +41,13 @@ public class ClientService : IClientService
 
     }
 
-    public Task<bool> DeleteClientAsync(Guid id)
+    public async Task<bool> DeleteClientAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var client = _context.Clients.FirstOrDefault(c => c.Id == id);
+        if (client == null) return false;
+        _context.Clients.Remove(client);
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public List<ClientDTO> GetAllClients()
@@ -59,11 +64,34 @@ public class ClientService : IClientService
 
     public ClientDTO? GetClientById(Guid id)
     {
-        throw new NotImplementedException();
+        var client = _context.Clients.FirstOrDefault(c => c.Id == id);
+        if (client == null) return null;
+        return new ClientDTO
+        {
+            Id = client.Id,
+            NomEntreprise = client.NomEntreprise,
+            SecteurActivite = client.SecteurActivite,
+            Adresse = client.Adresse,
+            Email = client.Email
+        };
     }
 
-    public Task<ClientDTO?> UpdateClientAsync(Guid id, ClientDTO clientDto)
+    public async Task<ClientDTO?> UpdateClientAsync(Guid id, ClientDTO clientDto)
     {
-        throw new NotImplementedException();
+        var client = _context.Clients.FirstOrDefault(c => c.Id == id);
+        if (client == null) return null;
+        client.NomEntreprise = clientDto.NomEntreprise;
+        client.SecteurActivite = clientDto.SecteurActivite;
+        client.Adresse = clientDto.Adresse;
+        client.Email = clientDto.Email;
+        await _context.SaveChangesAsync();
+        return new ClientDTO
+        {
+            Id = client.Id,
+            NomEntreprise = client.NomEntreprise,
+            SecteurActivite = client.SecteurActivite,
+            Adresse = client.Adresse,
+            Email = client.Email
+        };
     }
 }

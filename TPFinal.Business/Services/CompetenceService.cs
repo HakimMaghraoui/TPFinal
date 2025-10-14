@@ -2,6 +2,6 @@
 
 namespace TPFinal.Business.Services;
 
-public interface CompetenceService : ICompetenceService
+public class CompetenceService : ICompetenceService
 {
 }

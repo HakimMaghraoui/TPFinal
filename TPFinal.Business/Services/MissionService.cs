@@ -2,6 +2,6 @@
 
 namespace TPFinal.Business.Services;
 
-public interface MissionService : IMissionService
+public class MissionService : IMissionService
 {
 }
