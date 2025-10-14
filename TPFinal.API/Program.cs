@@ -15,6 +15,9 @@ builder.Services.AddDbContext<TPFinalDbContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("TPFinalDbContext")));
 
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ICompetenceService, CompetenceService>();
+builder.Services.AddScoped<IConsultantService, ConsultantService>();
+builder.Services.AddScoped<IMissionService, MissionService>();
 
 var app = builder.Build();
 
