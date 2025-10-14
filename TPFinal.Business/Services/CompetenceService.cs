@@ -1,4 +1,4 @@
-﻿using System.Net;
+﻿using Microsoft.EntityFrameworkCore;
 using TPFinal.Business.Abstractions;
 using TPFinal.Business.Models;
 using TPFinal.DAL.Context;
@@ -14,9 +14,9 @@ public class CompetenceService : ICompetenceService
         _context = context;
     }
 
-    public Task<bool> CompetenceExistAsync(Guid id)
+    public async Task<bool> CompetenceExistAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Competences.AnyAsync(m => m.Id == id);
     }
 
     public async Task<Guid> CreateCompetenceAsync(CompetenceDTO competenceDto)
@@ -41,12 +41,15 @@ public class CompetenceService : ICompetenceService
 
     }
 
-    public async Task DeleteCompetenceAsync(Guid id)
+    public async Task<bool> DeleteCompetenceAsync(Guid id)
     {
-        var competenceDTO = new CompetenceDTO(); ;
-        var competence = _context.Competences.FirstOrDefault(a => a.Id == id);
-         _context.Remove(competence);
+        var competence = await _context.Competences.FindAsync(id);
+        if (competence == null)
+            return false;
+
+        _context.Competences.Remove(competence);
         await _context.SaveChangesAsync();
+        return true;
     }
 
     public List<CompetenceDTO> GetAllCompetences()
@@ -73,20 +76,22 @@ public class CompetenceService : ICompetenceService
         return competenceDTO;
     }
 
-    public async Task<CompetenceDTO?> UpdateCompetenceAsync(Guid id, CompetenceDTO cmpetenceDto)
-    {
-        var competenceDTO = new CompetenceDTO(); ;
-        var competence = _context.Competences.FirstOrDefault(a => a.Id == id);
-        if (competence is not null)
+    public async Task<CompetenceDTO?> UpdateCompetenceAsync(Guid id, CompetenceDTO competenceDto)
+    { 
+
+          var competence = await _context.Competences.FindAsync(id);
+        if (competence == null)
+            return null;
+        competence.CompetenceTechnique = competenceDto.CompetenceTechnique;
+        competence.Categorie = competenceDto.Categorie;
+
+        await _context.SaveChangesAsync();
+
+        return new CompetenceDTO
         {
-            competenceDTO = new CompetenceDTO
-            {
-                CompetenceTechnique = competence.CompetenceTechnique,
-                Categorie = competence.Categorie
-            };
-
-         _context.Competences.Update(competence);
-
-            await _context.SaveChangesAsync();        
+            Id = competence.Id,
+            CompetenceTechnique = competence.CompetenceTechnique,
+            Categorie = competence.Categorie,
+}       ;
     }
 }
