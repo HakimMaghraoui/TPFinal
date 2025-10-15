@@ -32,11 +32,11 @@ public class ConsultantsController : ControllerBase
 
     [HttpGet]
     [Route("{id:guid}")]
-    public Task<IActionResult> GetConsultantById([FromRoute] Guid id)
+    public async Task<IActionResult> GetConsultantById([FromRoute] Guid id)
     {
-        var consultant = _consultantService.GetConsultantById(id);
-        if (consultant == null) return Task.FromResult<IActionResult>(NotFound());
-        return Task.FromResult<IActionResult>(Ok(consultant));
+        var consultant = await _consultantService.GetConsultantByIdAsync(id);
+        if (consultant == null) return NotFound();
+        return Ok(consultant);
     }
 
     [HttpPut]
