@@ -1,7 +1,8 @@
-﻿// TPFinal.Web/Models/CompetenceViewModel.cs
+﻿
 using System;
 using System.ComponentModel.DataAnnotations;
 
+namespace TPFinal.Web.Models.Competences;
 public class CompetenceViewModel
 {
     public Guid Id { get; set; }
