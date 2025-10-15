@@ -5,6 +5,7 @@ using TPFinal.Business.Models;
 using System.Text.Json;
 
 using System.Text;
+using TPFinal.Web.Models.Competences;
 
 namespace TPFinal.Web.Controllers
 {
