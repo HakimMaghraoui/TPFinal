@@ -1,5 +1,3 @@
-﻿
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace TPFinal.Web.Models.Competences;
