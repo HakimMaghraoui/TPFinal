@@ -28,7 +28,8 @@ public class ConsultantService : IConsultantService
             Nom = consultantDto.Nom,
             Prenom = consultantDto.Prenom,
             Email = consultantDto.Email,
-            DateEmbauche = consultantDto.DateEmbauche
+            DateEmbauche = consultantDto.DateEmbauche,
+            Competences = new List<ConsultantCompetence>()
         };
         try
         {
@@ -60,21 +61,37 @@ public class ConsultantService : IConsultantService
                 Nom = c.Nom,
                 Prenom = c.Prenom,
                 Email = c.Email,
-                DateEmbauche = c.DateEmbauche
+                DateEmbauche = c.DateEmbauche,
+                Competences = c.Competences.Select(cc => new ConsultantCompetenceDTO
+                {
+                    ConsultantId = cc.ConsultantId,
+                    CompetenceId = cc.CompetenceId,
+                    Niveau = cc.Niveau
+                }).ToList()
             }).ToList();
     }
 
-    public ConsultantDTO? GetConsultantById(Guid id)
+    public async Task<ConsultantDTO?> GetConsultantByIdAsync(Guid id)
     {
-        var consultant = _context.Consultants.FirstOrDefault(c => c.Id == id);
-        if (consultant == null) return null;
+        var consultant = await _context.Consultants
+            .Include(c => c.Competences)
+            .ThenInclude(cc => cc.Competence)
+            .FirstOrDefaultAsync(c => c.Id == id);
+        if (consultant == null)
+            return null;
         return new ConsultantDTO
         {
             ConsultantId = consultant.Id,
             Nom = consultant.Nom,
             Prenom = consultant.Prenom,
             Email = consultant.Email,
-            DateEmbauche = consultant.DateEmbauche
+            DateEmbauche = consultant.DateEmbauche,
+            Competences = consultant.Competences.Select(cc => new ConsultantCompetenceDTO
+            {
+                ConsultantId = cc.ConsultantId,
+                CompetenceId = cc.CompetenceId,
+                Niveau = cc.Niveau
+            }).ToList()
         };
     }
 
@@ -93,7 +110,13 @@ public class ConsultantService : IConsultantService
             Nom = consultant.Nom,
             Prenom = consultant.Prenom,
             Email = consultant.Email,
-            DateEmbauche = consultant.DateEmbauche
+            DateEmbauche = consultant.DateEmbauche,
+            Competences = consultant.Competences.Select(cc => new ConsultantCompetenceDTO
+            {
+                ConsultantId = cc.ConsultantId,
+                CompetenceId = cc.CompetenceId,
+                Niveau = cc.Niveau
+            }).ToList()
         };
     }
 }

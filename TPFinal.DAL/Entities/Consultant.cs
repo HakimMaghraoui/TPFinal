@@ -25,6 +25,6 @@ public class Consultant
     [Required(ErrorMessage = "Date d'embauche est obligatoire")]
     [Display(Name = "Date d'embauche")]
     public DateTime DateEmbauche { get; set; }
-    public ICollection<ConsultantCompetence>? Competences { get; set; }
+    public ICollection<ConsultantCompetence> Competences { get; set; } = new List<ConsultantCompetence>();
     public ICollection<Mission>? Missions { get; set; }
 }

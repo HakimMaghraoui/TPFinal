@@ -1,0 +1,31 @@
+﻿@model ConsultantViewModel
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="alert alert-warning" role="alert">
+    Êtes-vous sûr de vouloir supprimer le consultant @Model.Nom @Model.Prenom ? Cette action est irréversible.
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        Détails du Consultant
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Nom</dt>
+            <dd class="col-sm-9">@Model.Nom @Model.Prenom</dd>
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+            <dt class="col-sm-3">Date d'embauche</dt>
+            <dd class="col-sm-9">@Model.DateEmbauche.ToString("dd/MM/yyyy")</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="DeleteConfirmed" asp-route-id="@Model.ConsultantId" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+        <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+    </div>
+</form>

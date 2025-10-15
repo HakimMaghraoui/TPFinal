@@ -22,14 +22,17 @@ public class ConsultantCompetenceService : IConsultantCompetenceService
 
     public async Task<bool> AddOrUpdateAsync(ConsultantCompetenceDTO dto)
     {
-        // Vérifie existence consultant et compétence
-        var consultantExists = await _context.Consultants.AnyAsync(c => c.Id == dto.ConsultantId);
-        var competenceExists = await _context.Competences.AnyAsync(c => c.Id == dto.CompetenceId);
+        // Validate Consultant and Competence existence
+        var consultant = await _context.Consultants
+            .Include(c => c.Competences) // Ensure Consultant is tracked with Competences
+            .FirstOrDefaultAsync(c => c.Id == dto.ConsultantId);
+        var competence = await _context.Competences
+            .FirstOrDefaultAsync(c => c.Id == dto.CompetenceId);
 
-        if (!consultantExists || !competenceExists)
+        if (consultant == null || competence == null)
             return false;
 
-        // Vérifie si la liaison existe déjà
+        // Check if the link exists
         var existing = await _context.ConsultantCompetences
             .FirstOrDefaultAsync(cc => cc.ConsultantId == dto.ConsultantId && cc.CompetenceId == dto.CompetenceId);
 
@@ -45,7 +48,8 @@ public class ConsultantCompetenceService : IConsultantCompetenceService
                 CompetenceId = dto.CompetenceId,
                 Niveau = dto.Niveau
             };
-            await _context.ConsultantCompetences.AddAsync(newLink);
+            consultant.Competences.Add(newLink); // Add to navigation property
+            _context.ConsultantCompetences.Add(newLink);
         }
 
         await _context.SaveChangesAsync();

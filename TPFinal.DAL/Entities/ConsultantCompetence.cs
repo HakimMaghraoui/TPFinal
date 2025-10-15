@@ -5,8 +5,6 @@ namespace TPFinal.DAL.Entities;
 
 public class ConsultantCompetence
 {
-    [Key]
-    public Guid Id { get; set; }
     [ForeignKey("Consultant")]
     public Guid ConsultantId { get; set; }
     public Consultant? Consultant { get; set; }

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TPFinal.Web.Models.Clients.ClientViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Rechercher par nom d'entreprise" value="@ViewBag.Search" />
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Réinitialiser</a>
+    </div>
+</form>
+
+<h1>Liste des clients : </h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @{
+                var sample = Model?.FirstOrDefault() ?? new TPFinal.Web.Models.Clients.ClientViewModel();
+            }
+            <th>@Html.DisplayNameFor(_ => sample.NomEntreprise)</th>
+            <th>@Html.DisplayNameFor(_ => sample.SecteurActivite)</th>
+            <th>@Html.DisplayNameFor(_ => sample.Adresse)</th>
+            <th>@Html.DisplayNameFor(_ => sample.Email)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomEntreprise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecteurActivite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

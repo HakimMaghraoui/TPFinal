@@ -1,0 +1,51 @@
+﻿@model ConsultantViewModel
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="card mb-3">
+    <div class="card-header">
+        Informations du Consultant
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Nom</dt>
+            <dd class="col-sm-9">@Model.Nom @Model.Prenom</dd>
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9"><a href="mailto:@Model.Email">@Model.Email</a></dd>
+            <dt class="col-sm-3">Date d'embauche</dt>
+            <dd class="col-sm-9">@Model.DateEmbauche.ToString("dd/MM/yyyy")</dd>
+        </dl>
+    </div>
+</div>
+
+<h3>Compétences</h3>
+@if (Model.Competences.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Compétence</th>
+                <th>Niveau</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var competence in Model.Competences)
+            {
+                <tr>
+                    <td>@competence.CompetenceTechnique</td>
+                    <td>@competence.Niveau</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p role="alert">Aucune compétence associée.</p>
+}
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.ConsultantId" class="btn btn-primary">Modifier</a>
+    <a asp-action="Delete" asp-route-id="@Model.ConsultantId" class="btn btn-danger">Supprimer</a>
+    <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
+</div>

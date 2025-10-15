@@ -1,0 +1,80 @@
+﻿@model ConsultantViewModel
+@{
+    var competences = ViewBag.Competences as List<CompetenceViewModel>;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="Nom" class="form-label"></label>
+                <input asp-for="Nom" class="form-control" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Prenom" class="form-label"></label>
+                <input asp-for="Prenom" class="form-control" />
+                <span asp-validation-for="Prenom" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DateEmbauche" class="form-label"></label>
+                <input asp-for="DateEmbauche" class="form-control" type="date" value="@Model.DateEmbauche.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DateEmbauche" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Compétences</h3>
+            @if (competences != null && competences.Any())
+            {
+                <div class="mb-3">
+                    <label class="form-label">Sélectionner des compétences</label>
+                    <select name="selectedCompetenceIds" multiple class="form-select" aria-label="Sélectionner des compétences">
+                        @foreach (var competence in competences)
+                        {
+                            <option value="@competence.Id">
+                                @competence.CompetenceTechnique
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Niveaux des compétences</label>
+                    @foreach (var competence in competences)
+                    {
+                        var index = competences.IndexOf(competence);
+                        <div class="mb-2">
+                            <label>@competence.CompetenceTechnique</label>
+                            <input type="number" name="niveaux[@index]" min="1" max="5" value="1" class="form-control d-inline w-25" />
+                            <input type="hidden" name="selectedCompetenceIds[@index]" value="@competence.Id" />
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="text-danger" role="alert">Aucune compétence disponible. Veuillez vérifier la connexion à l'API.</p>
+            }
+        </div>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Créer</button>
+        <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+    </div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+</form>

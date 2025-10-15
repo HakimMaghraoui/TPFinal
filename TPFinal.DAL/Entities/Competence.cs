@@ -13,4 +13,5 @@ public class Competence
     [Display(Name = "Catégorie")]
     [StringLength(50, ErrorMessage = "La catégorie ne peut pas dépasser 50 caractères.")]
     public string Categorie { get; set; } = string.Empty;
+    public ICollection<ConsultantCompetence> ConsultantCompetences { get; set; } = new List<ConsultantCompetence>();
 }

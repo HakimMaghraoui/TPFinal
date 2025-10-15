@@ -2,8 +2,6 @@
 using TPFinal.Business.Abstractions;
 using TPFinal.Business.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace TPFinal.API.Controllers;
 
 [Route("api/[controller]")]
@@ -12,6 +10,7 @@ public class ConsultantCompetencesController : ControllerBase
 {
     private readonly IConsultantCompetenceService _consultantCompetenceService;
     private readonly IConsultantService _consultantService;
+
     public ConsultantCompetencesController(IConsultantCompetenceService consultantCompetenceService, IConsultantService consultantService)
     {
         _consultantCompetenceService = consultantCompetenceService;
@@ -22,11 +21,15 @@ public class ConsultantCompetencesController : ControllerBase
     public async Task<IActionResult> AddOrUpdate([FromBody] ConsultantCompetenceDTO dto)
     {
         var result = await _consultantCompetenceService.AddOrUpdateAsync(dto);
-        var updatedConsultant = _consultantService.GetConsultantById(dto.ConsultantId);
-        if (updatedConsultant == null) return NotFound("Consultant not found.");
-        _consultantService.UpdateConsultantAsync(updatedConsultant.ConsultantId, updatedConsultant);
-        if (result == null) return BadRequest("Operation failed.");
-        return Ok(result);
+        if (!result)
+            return BadRequest("Failed to add or update consultant competence.");
+
+        // Fetch the updated consultant with competences
+        var consultant = await _consultantService.GetConsultantByIdAsync(dto.ConsultantId);
+        if (consultant == null)
+            return NotFound("Consultant not found.");
+
+        return Ok(consultant);
     }
 
     [HttpDelete]
@@ -34,7 +37,8 @@ public class ConsultantCompetencesController : ControllerBase
     public async Task<IActionResult> Remove([FromRoute] Guid consultantId, [FromRoute] Guid competenceId)
     {
         var result = await _consultantCompetenceService.RemoveAsync(consultantId, competenceId);
-        if (!result) return NotFound();
+        if (!result)
+            return NotFound();
         return NoContent();
     }
 
@@ -45,5 +49,4 @@ public class ConsultantCompetencesController : ControllerBase
         var competences = await _consultantCompetenceService.GetByConsultantAsync(consultantId);
         return Ok(competences);
     }
-
 }
