@@ -22,7 +22,7 @@ namespace TPFinal.Web.Controllers
         }
 
         // GET: Clients
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
             var response = await _httpClient.GetAsync("clients");
 
@@ -38,6 +38,14 @@ namespace TPFinal.Web.Controllers
             if (clients == null)
                 return View("Error");
 
+            if (!string.IsNullOrEmpty(search))
+            {
+                clients = clients.Where(c =>
+                    c.NomEntreprise.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.Search = search;
+            ViewData["Title"] = "Liste des Clients";
             return View(clients);
         }
 

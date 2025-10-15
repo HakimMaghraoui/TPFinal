@@ -5,6 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Rechercher par nom d'entreprise" value="@ViewBag.Search" />
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Réinitialiser</a>
+    </div>
+</form>
+
 <h1>Liste des clients : </h1>
 
 <p>
