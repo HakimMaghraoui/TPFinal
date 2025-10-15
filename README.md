@@ -56,14 +56,6 @@ TPFinal est une application web développée en ASP.NET Core Razor Pages (.NET 8
 - **Pages Razor** : `TPFinal.Web.Pages`
 - **Vues partagées** : `TPFinal.Web.Views.Shared`
 
-## Contribution
-
-Les contributions sont les bienvenues ! Veuillez ouvrir une issue ou une pull request pour toute suggestion ou amélioration.
-
-## Licence
-
-Ce projet est sous licence MIT.
-
 ---
 
 *Projet réalisé dans le cadre d’une formation AJC.*
