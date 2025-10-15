@@ -1,5 +1,3 @@
-﻿// TPFinal.Web/Models/CompetenceViewModel.cs
-using System;
 using System.ComponentModel.DataAnnotations;
 
 public class CompetenceViewModel

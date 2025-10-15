@@ -1,0 +1,47 @@
+﻿@model CompetenceViewModel
+
+@{
+    ViewData["Title"] = "Liste des compétences";
+}
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Rechercher par Compétences ou Catégorie" value="@ViewBag.Search" />
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Réinitialiser</a>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Créer un nouveau Compétence</a>
+</p>
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="CompetenceTechnique" class="form-label"></label>
+                <input asp-for="CompetenceTechnique" class="form-control" />
+                <span asp-validation-for="CompetenceTechnique" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Categorie" class="form-label"></label>
+                <input asp-for="Categorie" class="form-control" />
+                <span asp-validation-for="Categorie" class="text-danger"></span>
+            </div>
+           
+        </div>
+       </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Créer</button>
+        <a asp-action="Index" class="btn btn-secondary">Annuler</a>
+    </div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger" role="alert">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+</form>
