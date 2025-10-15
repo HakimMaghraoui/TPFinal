@@ -17,7 +17,7 @@ public class CompetencesController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<CompetenceDTO>> GetAllCompetences()
+    public ActionResult<CompetenceDTO> GetAllCompetences()
     {
         var competences = _competenceService.GetAllCompetences();
         return Ok(competences);
