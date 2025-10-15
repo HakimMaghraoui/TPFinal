@@ -1,8 +1,6 @@
 ﻿@using TPFinal.Web.Models.Consultants
 @model IEnumerable<ConsultantViewModel>
 
-<h1>@ViewData["Title"]</h1>
-
 <form asp-action="Index" method="get" class="mb-3">
     <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="Rechercher par nom ou email" value="@ViewBag.Search" />
