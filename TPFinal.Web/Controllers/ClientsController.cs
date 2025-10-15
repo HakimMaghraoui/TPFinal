@@ -6,6 +6,8 @@ using TPFinal.Business.Abstractions;
 using TPFinal.Business.Services;
 using TPFinal.DAL.Entities;
 using TPFinal.Web.Models.Clients;
+using TPFinal.Web.Models.Missions;
+using TPFinal.Business.Models;
 
 namespace TPFinal.Web.Controllers
 {
@@ -30,23 +32,36 @@ namespace TPFinal.Web.Controllers
                 return View("Error");
 
             var json = await response.Content.ReadAsStringAsync();
-            var clients = JsonSerializer.Deserialize<List<ClientViewModel>>(json, new JsonSerializerOptions
+            var clients = JsonSerializer.Deserialize<List<ClientDTO>>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
-            if (clients == null)
-                return View("Error");
+            var missions = await _httpClient.GetFromJsonAsync<List<MissionDTO>>("Missions");
+
+            var clientViewModels = clients?.Select(c => new ClientViewModel
+            {
+                Id = c.Id,
+                NomEntreprise = c.NomEntreprise,
+                SecteurActivite = c.SecteurActivite,
+                Adresse = c.Adresse,
+                Email = c.Email,
+                Missions = missions?.Where(m => m.ClientId == c.Id).Select(m => new MissionViewModel
+                {
+                    Id = m.Id,
+                    Titre = m.Titre
+                }).ToList()
+            }).ToList() ?? new List<ClientViewModel>();
 
             if (!string.IsNullOrEmpty(search))
             {
-                clients = clients.Where(c =>
+                clientViewModels = clientViewModels.Where(c =>
                     c.NomEntreprise.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
             ViewBag.Search = search;
             ViewData["Title"] = "Liste des Clients";
-            return View(clients);
+            return View(clientViewModels);
         }
 
         // GET: Clients/Create
@@ -55,7 +70,7 @@ namespace TPFinal.Web.Controllers
         // POST: Clients/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ClientViewModel client)
+        public async Task<IActionResult> Create(ClientCreateOrUpdateViewModel client)
         {
             if (!ModelState.IsValid)
                 return View(client);
@@ -75,6 +90,7 @@ namespace TPFinal.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
         // GET: Clients/Edit/5
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -84,7 +100,7 @@ namespace TPFinal.Web.Controllers
                 return View("Error");
 
             var json = await response.Content.ReadAsStringAsync();
-            var client = JsonSerializer.Deserialize<ClientViewModel>(json, new JsonSerializerOptions
+            var client = JsonSerializer.Deserialize<ClientDTO>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
@@ -98,16 +114,16 @@ namespace TPFinal.Web.Controllers
                 NomEntreprise = client.NomEntreprise,
                 SecteurActivite = client.SecteurActivite,
                 Adresse = client.Adresse,
-                Email = client.Email,
-                Missions = client.Missions
+                Email = client.Email
             };
 
             return View(viewModel);
         }
+
         // POST: Clients/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, ClientViewModel client)
+        public async Task<IActionResult> Edit(Guid id, ClientCreateOrUpdateViewModel client)
         {
             if (id != client.Id)
                 return BadRequest();
@@ -130,6 +146,7 @@ namespace TPFinal.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
         // GET: Clients/Delete/5
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -149,6 +166,7 @@ namespace TPFinal.Web.Controllers
 
             return View(client);
         }
+
         // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -161,6 +179,7 @@ namespace TPFinal.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
         // GET: Clients/Details/5
         public async Task<IActionResult> Details(Guid id)
         {
@@ -170,15 +189,37 @@ namespace TPFinal.Web.Controllers
                 return View("Error");
 
             var json = await response.Content.ReadAsStringAsync();
-            var client = JsonSerializer.Deserialize<ClientViewModel>(json, new JsonSerializerOptions
+            var client = JsonSerializer.Deserialize<ClientDTO>(json, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
+            var missions = await _httpClient.GetFromJsonAsync<List<MissionDTO>>("Missions");
+
             if (client == null)
                 return View("Error");
 
-            return View(client);
+            var viewModel = new ClientViewModel
+            {
+                Id = client.Id,
+                NomEntreprise = client.NomEntreprise,
+                SecteurActivite = client.SecteurActivite,
+                Adresse = client.Adresse,
+                Email = client.Email,
+                Missions = missions?.Where(m => m.ClientId == client.Id).Select(m => new MissionViewModel
+                {
+                    Id = m.Id,
+                    Titre = m.Titre,
+                    Description = m.Description,
+                    DateDebut = m.DateDebut,
+                    DateFin = m.DateFin,
+                    Budget = m.Budget,
+                    ClientId = m.ClientId,
+                    ConsultantId = m.ConsultantId
+                }).ToList()
+            };
+
+            return View(viewModel);
         }
     }
 }

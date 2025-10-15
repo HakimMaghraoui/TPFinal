@@ -1,51 +1,74 @@
-﻿@model TPFinal.Web.Models.Clients.ClientCreateOrUpdateViewModel
+﻿@model IEnumerable<TPFinal.Web.Models.Clients.ClientViewModel>
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Liste des Clients";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>ClientCreateOrUpdateViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NomEntreprise" class="control-label"></label>
-                <input asp-for="NomEntreprise" class="form-control" />
-                <span asp-validation-for="NomEntreprise" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SecteurActivite" class="control-label"></label>
-                <input asp-for="SecteurActivite" class="form-control" />
-                <span asp-validation-for="SecteurActivite" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Adresse" class="control-label"></label>
-                <input asp-for="Adresse" class="form-control" />
-                <span asp-validation-for="Adresse" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Rechercher par nom d'entreprise" value="@ViewBag.Search" />
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Réinitialiser</a>
     </div>
-</div>
+</form>
 
-<div>
-    <a asp-action="Index" class="btn btn-secondary">
-        <i class="fas fa-arrow-left"></i> Retour à la liste
-    </a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<p>
+    <a asp-action="Create" class="btn btn-success">Créer un nouveau client</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @{
+                var sample = Model?.FirstOrDefault() ?? new TPFinal.Web.Models.Clients.ClientViewModel();
+            }
+            <th>@Html.DisplayNameFor(_ => sample.NomEntreprise)</th>
+            <th>@Html.DisplayNameFor(_ => sample.SecteurActivite)</th>
+            <th>@Html.DisplayNameFor(_ => sample.Adresse)</th>
+            <th>@Html.DisplayNameFor(_ => sample.Email)</th>
+            <th>Missions</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomEntreprise)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SecteurActivite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adresse)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @if (item.Missions != null && item.Missions.Any())
+                    {
+                        <ul>
+                            @foreach (var mission in item.Missions)
+                            {
+                                <li>@mission.Titre</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span>Aucune mission</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
