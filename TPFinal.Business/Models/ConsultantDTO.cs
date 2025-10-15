@@ -16,7 +16,7 @@ public class ConsultantDTO
     public string Email { get; set; } = string.Empty;
     [Required(ErrorMessage = "Date d'embauche est obligatoire")]
     public DateTime DateEmbauche { get; set; }
-    public List<ConsultantCompetenceDTO>? Competences { get; set; }
-    public List<MissionDTO>? Missions { get; set; }
+    public List<ConsultantCompetenceDTO> Competences { get; set; } = new List<ConsultantCompetenceDTO>();
+    public List<MissionDTO> Missions { get; set; } = new List<MissionDTO>();
 
 }

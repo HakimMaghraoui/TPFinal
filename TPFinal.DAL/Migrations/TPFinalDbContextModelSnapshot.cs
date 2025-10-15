@@ -101,24 +101,18 @@ namespace TPFinal.DAL.Migrations
 
             modelBuilder.Entity("TPFinal.DAL.Entities.ConsultantCompetence", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("ConsultantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CompetenceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ConsultantId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Niveau")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ConsultantId", "CompetenceId");
 
                     b.HasIndex("CompetenceId");
-
-                    b.HasIndex("ConsultantId");
 
                     b.ToTable("ConsultantCompetences");
                 });
@@ -135,13 +129,7 @@ namespace TPFinal.DAL.Migrations
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ClientId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("ConsultantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ConsultantId1")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateDebut")
@@ -163,11 +151,7 @@ namespace TPFinal.DAL.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("ClientId1");
-
                     b.HasIndex("ConsultantId");
-
-                    b.HasIndex("ConsultantId1");
 
                     b.ToTable("Missions");
                 });
@@ -175,7 +159,7 @@ namespace TPFinal.DAL.Migrations
             modelBuilder.Entity("TPFinal.DAL.Entities.ConsultantCompetence", b =>
                 {
                     b.HasOne("TPFinal.DAL.Entities.Competence", "Competence")
-                        .WithMany()
+                        .WithMany("ConsultantCompetences")
                         .HasForeignKey("CompetenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -193,24 +177,16 @@ namespace TPFinal.DAL.Migrations
 
             modelBuilder.Entity("TPFinal.DAL.Entities.Mission", b =>
                 {
-                    b.HasOne("TPFinal.DAL.Entities.Client", null)
+                    b.HasOne("TPFinal.DAL.Entities.Client", "Client")
                         .WithMany("Missions")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TPFinal.DAL.Entities.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId1");
-
-                    b.HasOne("TPFinal.DAL.Entities.Consultant", null)
+                    b.HasOne("TPFinal.DAL.Entities.Consultant", "Consultant")
                         .WithMany("Missions")
                         .HasForeignKey("ConsultantId")
                         .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("TPFinal.DAL.Entities.Consultant", "Consultant")
-                        .WithMany()
-                        .HasForeignKey("ConsultantId1");
 
                     b.Navigation("Client");
 
@@ -220,6 +196,11 @@ namespace TPFinal.DAL.Migrations
             modelBuilder.Entity("TPFinal.DAL.Entities.Client", b =>
                 {
                     b.Navigation("Missions");
+                });
+
+            modelBuilder.Entity("TPFinal.DAL.Entities.Competence", b =>
+                {
+                    b.Navigation("ConsultantCompetences");
                 });
 
             modelBuilder.Entity("TPFinal.DAL.Entities.Consultant", b =>

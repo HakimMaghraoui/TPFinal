@@ -17,19 +17,17 @@ public class MissionsController : ControllerBase
         _missionService = missionService;
     }
     [HttpGet]
-    public async Task<IActionResult> GetAllMissions()
+    public Task<IActionResult> GetAllMissions()
     {
         var missions = _missionService.GetAllMissions();
-        return Ok(missions);
+        return Task.FromResult<IActionResult>(Ok(missions));
     }
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetGetMissionById(Guid id)
+    public Task<IActionResult> GetGetMissionById(Guid id)
     {
         var mission = _missionService.GetMissionById(id);
-        if (mission == null)
-            return NotFound();
-
-        return Ok(mission);
+        if (mission == null) return Task.FromResult<IActionResult>(NotFound());
+        return Task.FromResult<IActionResult>(Ok(mission));
     }
     [HttpPost]
     public async Task<IActionResult> CreateMission([FromBody] MissionDTO missionDto)
