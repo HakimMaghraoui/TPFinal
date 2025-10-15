@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using TPFinal.Business.Models;
 using TPFinal.DAL.Entities;
+using TPFinal.Web.Models.Missions;
 
 namespace TPFinal.Web.Models.Clients;
 public class ClientViewModel
@@ -18,5 +19,5 @@ public class ClientViewModel
     [Display(Name = "Email")]
     public string Email { get; set; } = string.Empty;
     [Display(Name = "Missions")]
-    public ICollection<MissionDTO>? Missions { get; set; }
+    public ICollection<MissionViewModel>? Missions { get; set; }
 }

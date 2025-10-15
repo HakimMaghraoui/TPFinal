@@ -1,18 +1,19 @@
 ﻿@model TPFinal.Web.Models.Clients.ClientCreateOrUpdateViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modifier Client";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h1>Modifier Client</h1>
 
-<h4>ClientCreateOrUpdateViewModel</h4>
+<h4>@Model.NomEntreprise</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="NomEntreprise" class="control-label"></label>
                 <input asp-for="NomEntreprise" class="form-control" />
@@ -34,7 +35,7 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Enregistrer" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -47,5 +48,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
