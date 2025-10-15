@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ConsultantViewModel>
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" placeholder="Rechercher par nom ou email" value="@ViewBag.Search" />
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Réinitialiser</a>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Créer un nouveau consultant</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Date d'embauche</th>
+            <th>Compétences</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var consultant in Model)
+        {
+            <tr>
+                <td>@consultant.Nom</td>
+                <td>@consultant.Prenom</td>
+                <td>@consultant.Email</td>
+                <td>@consultant.DateEmbauche.ToString("yyyy-MM-dd")</td>
+                <td>
+                    @if (consultant.Competences != null && consultant.Competences.Any())
+                    {
+                        foreach (var competence in consultant.Competences)
+                        {
+                            <span class="badge bg-primary me-1">@competence.CompetenceTechnique (Niveau: @competence.Niveau)</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-muted">Aucune compétence</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@consultant.ConsultantId" class="btn btn-info btn-sm">Détails</a>
+                    <a asp-action="Edit" asp-route-id="@consultant.ConsultantId" class="btn btn-warning btn-sm">Modifier</a>
+                    <a asp-action="Delete" asp-route-id="@consultant.ConsultantId" class="btn btn-danger btn-sm">Supprimer</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
