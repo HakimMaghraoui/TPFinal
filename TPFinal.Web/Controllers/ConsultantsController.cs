@@ -4,6 +4,9 @@ using System.Net.Http.Json;
 using TPFinal.Web.Models;
 using TPFinal.Business.Models;
 using System.Text.Json;
+using TPFinal.Web.Models.Consultants;
+using TPFinal.Web.Models.ConsultantCompetences;
+using TPFinal.Web.Models.Competences;
 
 namespace TPFinal.Web.Controllers;
 

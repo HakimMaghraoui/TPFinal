@@ -1,7 +1,7 @@
-﻿// TPFinal.Web/Models/ConsultantCompetenceViewModel.cs
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
+namespace TPFinal.Web.Models.ConsultantCompetences;
 public class ConsultantCompetenceViewModel
 {
     public Guid ConsultantId { get; set; }

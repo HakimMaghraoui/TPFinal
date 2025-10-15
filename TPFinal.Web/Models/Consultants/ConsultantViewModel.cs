@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using TPFinal.Web.Models;
+using TPFinal.Web.Models.ConsultantCompetences;
 
 
+namespace TPFinal.Web.Models.Consultants;
 public class ConsultantViewModel
 {
     public Guid ConsultantId { get; set; }
