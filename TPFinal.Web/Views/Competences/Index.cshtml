@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<TPFinal.Web.Models.Competences.CompetenceViewModel>
 
-@{
-    ViewData["Title"] = "Liste des compétences";
-}
 <form asp-action="Index" method="get" class="mb-3">
     <div class="input-group">
         <input type="text" name="search" class="form-control" placeholder="Rechercher par Compétences ou Catégorie" value="@ViewBag.Search" />
@@ -12,7 +9,7 @@
 </form>
 
 <p>
-    <a asp-action="Create" class="btn btn-success">Créer un nouveau Compétence</a>
+    <a asp-action="Create" class="btn btn-success">Créer une nouvelle compétence</a>
 </p>
 
 <table class="table">

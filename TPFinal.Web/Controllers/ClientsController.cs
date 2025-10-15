@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// TPFinal.Web/Controllers/ClientsController.cs
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -65,7 +66,10 @@ namespace TPFinal.Web.Controllers
         }
 
         // GET: Clients/Create
-        public IActionResult Create() => View();
+        public IActionResult Create()
+        {
+            return View(new ClientCreateOrUpdateViewModel());
+        }
 
         // POST: Clients/Create
         [HttpPost]
