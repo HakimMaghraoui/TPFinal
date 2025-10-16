@@ -12,12 +12,12 @@
     <a asp-action="Create" class="btn btn-success">Créer une nouvelle compétence</a>
 </p>
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>Compétence Tech</th>
-            <th>Categorie</th>
-            <th>Actions</th>
+            <th>@Html.DisplayNameFor(model => model.CompetenceTechnique)</th>
+            <th>@Html.DisplayNameFor(model => model.Categorie)</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>

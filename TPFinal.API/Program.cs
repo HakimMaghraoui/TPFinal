@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TPFinal.Business.Abstractions;
 using TPFinal.Business.Services;
+using TPFinal.DAL;
 using TPFinal.DAL.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,11 +23,12 @@ builder.Services.AddScoped<IMissionService, MissionService>();
 
 var app = builder.Build();
 
-// Ensure database is created
+// Ensure database is created and seed data
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<TPFinalDbContext>();
     dbContext.Database.EnsureCreated();
+    Seeder.SeedData(dbContext);
 }
 
 // Configure the HTTP request pipeline.

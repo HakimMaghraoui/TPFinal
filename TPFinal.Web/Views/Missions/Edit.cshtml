@@ -5,13 +5,11 @@
 @model MissionViewModel
 
 @{
-    ViewData["Title"] = $"Modifier Mission : {Model.Titre}";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     var clients = ViewBag.Clients as List<ClientViewModel>;
     var consultants = ViewBag.Consultants as List<ConsultantViewModel>;
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Modifier Mission : @Model.Titre</h1>
 
 <form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()

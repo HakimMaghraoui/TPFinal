@@ -10,7 +10,7 @@ public class ClientViewModel
 {
     [HiddenInput]
     public Guid Id { get; set; }
-    [Display(Name = "NomEntreprise")]
+    [Display(Name = "Nom de l'entreprise")]
     public string NomEntreprise { get; set; } = string.Empty;
     [Display(Name = "Secteur d'activité")]
     public string SecteurActivite { get; set; } = string.Empty;

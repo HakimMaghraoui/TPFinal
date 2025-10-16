@@ -1,7 +1,7 @@
 ﻿@using TPFinal.Web.Models.Consultants
 @model ConsultantViewModel
 
-<h1>@ViewData["Title"]</h1>
+<h1>Détail du consultant</h1>
 
 <div class="card mb-3">
     <div class="card-header">
@@ -46,7 +46,6 @@ else
 }
 
 <div class="mt-3">
-    <a asp-action="Edit" asp-route-id="@Model.ConsultantId" class="btn btn-primary">Modifier</a>
-    <a asp-action="Delete" asp-route-id="@Model.ConsultantId" class="btn btn-danger">Supprimer</a>
+    <a asp-action="Edit" asp-route-id="@Model.ConsultantId" class="btn btn-warning">Modifier</a>
     <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
 </div>

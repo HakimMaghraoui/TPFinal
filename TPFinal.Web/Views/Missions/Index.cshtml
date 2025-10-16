@@ -34,10 +34,10 @@
                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                 <td>@Html.DisplayFor(modelItem => item.DateDebut, "{0:yyyy-MM-dd}")</td>
                 <td>@Html.DisplayFor(modelItem => item.DateFin, "{0:yyyy-MM-dd}")</td>
-                <td>@Html.DisplayFor(modelItem => item.Budget)</td>
+                <td class="text-nowrap">@Html.DisplayFor(modelItem => item.Budget) €</td>
                 <td>@Html.DisplayFor(modelItem => item.ClientNomEntreprise)</td>
                 <td>@Html.DisplayFor(modelItem => item.ConsultantNomPrenom)</td>
-                <td>
+                <td class="text-nowrap">
                     <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Détails</a>
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Modifier</a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Supprimer</a>

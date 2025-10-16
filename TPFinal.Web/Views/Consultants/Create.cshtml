@@ -6,6 +6,8 @@
     var competences = ViewBag.Competences as List<CompetenceViewModel>;
 }
 
+<h1>Création d'une compétence</h1>
+
 <form asp-action="Create" method="post">
     @Html.AntiForgeryToken()
     <div class="row">

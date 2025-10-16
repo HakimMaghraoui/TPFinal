@@ -1,11 +1,11 @@
 ﻿@using TPFinal.Web.Models.Consultants
 @using TPFinal.Web.Models.Competences
-@model ConsultantViewModel
+@model TPFinal.Web.Models.Consultants.ConsultantViewModel
 @{
     var competences = ViewBag.Competences as List<CompetenceViewModel>;
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Modifier Consultant : @Model.Nom @Model.Prenom</h1>
 
 <form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()

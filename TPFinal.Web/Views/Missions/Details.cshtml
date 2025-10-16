@@ -1,12 +1,8 @@
 ﻿@using TPFinal.Web.Models.Missions
 @model MissionViewModel
 
-@{
-    ViewData["Title"] = $"Détails de la Mission : {Model.Titre}";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-<h1>@ViewData["Title"]</h1>
+<h1>Détail de la mission</h1>
 
 <div>
     <dl class="row">
@@ -28,6 +24,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Modifier</a>
-    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Supprimer</a>
     <a asp-action="Index" class="btn btn-secondary">Retour à la liste</a>
 </div>

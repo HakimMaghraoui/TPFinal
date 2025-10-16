@@ -1,12 +1,9 @@
 ﻿@model TPFinal.Web.Models.Competences.CompetenceViewModel
 
-@{
-    ViewData["Title"] = "Supprimer une compétence";
-}
-
-<h3>Are you sure you want to delete this?</h3>
+<div class="alert alert-warning" role="alert">
+    Êtes-vous sûr de vouloir supprimer la compétence @Model.CompetenceTechnique ? Cette action est irréversible.
+</div>
 <div>
-    <h4>CompetenceViewModel</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">

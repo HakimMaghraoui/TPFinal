@@ -1,14 +1,9 @@
 ﻿@using TPFinal.Web.Models.Missions
 @model MissionViewModel
 
-@{
-    ViewData["Title"] = $"Supprimer Mission : {Model.Titre}";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h1>@ViewData["Title"]</h1>
-
-<h3>Êtes-vous sûr de vouloir supprimer cette mission ?</h3>
+<div class="alert alert-warning" role="alert">
+    Êtes-vous sûr de vouloir supprimer la mission @Model.Titre ? Cette action est irréversible.
+</div>
 <div>
     <dl class="row">
         <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Titre)</dt>
